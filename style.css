@@ -1,0 +1,595 @@
+/* ==========================================================
+   Maverick Math Club - Homework 3 stylesheet
+   Author: Braden Thooft
+   Sources consulted:
+   - MDN, CSS reference: https://developer.mozilla.org/en-US/docs/Web/CSS
+   - MDN, Basic concepts of flexbox:
+     https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox
+   - MDN, :user-invalid: https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid
+   - WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/
+   ========================================================== */
+
+/* ---------- 1. Setup ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    /* One accent color (Mavericks purple), reused for links, buttons, borders */
+    --accent: #5b2c8f;                    /* HEX */
+    --accent-dark: #3f1d66;
+    --accent-light: hsl(270, 45%, 94%);   /* HSL */
+    --gold: #f2b632;
+    --text: #222222;
+    --muted: #555555;
+    --bg: hsl(270, 20%, 98%);
+    --surface: #ffffff;
+    --border: #d6cfe0;
+    --error: #b00020;
+    --shadow: rgba(40, 20, 70, 0.12);     /* RGBA */
+    --radius: 8px;
+    --speed: 200ms;
+}
+
+/* ---------- 2. Color & typography ---------- */
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    color: var(--accent-dark);
+}
+
+h2 {
+    margin-top: 0;
+    padding-bottom: 0.4rem;
+    border-bottom: 3px solid var(--accent);
+}
+
+/* Comfortable line length for reading */
+p,
+li,
+caption {
+    max-width: 70ch;
+}
+
+a {
+    color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color var(--speed) ease, background-color var(--speed) ease;
+}
+
+a:hover {
+    color: var(--accent-dark);
+    text-decoration-color: var(--gold);
+}
+
+/* Visible keyboard focus everywhere (never removed without a replacement) */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---------- 3. Header & nav (Flexbox) ---------- */
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface);
+    border-bottom: 4px solid var(--accent);
+    box-shadow: 0 2px 8px var(--shadow);
+
+    /* 4. Positioning: header stays at the top while scrolling */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-list {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-list a {
+    display: block;
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current="page"] {
+    background-color: var(--accent-light);
+    color: var(--accent-dark);
+}
+
+/* ---------- Page containers & spacing ---------- */
+
+main,
+aside {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+main > section,
+main > article {
+    scroll-margin-top: 6rem;   /* #contact / #register links clear the sticky header */
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+#about img {
+    display: block;
+    margin: 1rem 0;
+    border-radius: var(--radius);
+}
+
+.news {
+    border-left: 6px solid var(--accent);
+}
+
+aside {
+    max-width: calc(960px - 3rem);
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    background-color: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+footer {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: #ffffff;
+    background-color: var(--accent-dark);
+}
+
+footer p {
+    margin: 0.4rem auto;
+}
+
+footer a {
+    color: var(--gold);
+}
+
+footer a:hover {
+    color: #ffffff;
+}
+
+/* ---------- 4. Hero with background image + fallback ---------- */
+
+main > .hero {
+    padding: 4rem 2rem;
+    color: #ffffff;
+    background-color: #2b1a40; /* fallback if the image does not load */
+    background-image:
+        linear-gradient(rgba(30, 12, 55, 0.78), rgba(30, 12, 55, 0.78)),
+        url("../images/chalkboard.jpg");
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.hero p {
+    margin: 0 0 1rem;
+}
+
+.hero-kicker {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+}
+
+.hero-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ---------- Buttons (shared accent) ---------- */
+
+.btn,
+button {
+    display: inline-block;
+    padding: 0.65rem 1.25rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--speed) ease,
+                border-color var(--speed) ease,
+                transform var(--speed) ease;
+}
+
+.btn:hover,
+button:hover {
+    color: #ffffff;
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    transform: translateY(-1px);
+}
+
+.hero .btn {
+    color: var(--accent-dark);
+    background-color: var(--gold);
+    border-color: var(--gold);
+}
+
+.hero .btn:hover {
+    color: var(--accent-dark);
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+button[type="reset"] {
+    color: var(--accent);
+    background-color: var(--surface);
+}
+
+button[type="reset"]:hover {
+    color: #ffffff;
+}
+
+button:disabled,
+button:disabled:hover {
+    color: #6b6b6b;
+    background-color: #e4e4e4;
+    border-color: #c4c4c4;
+    border-style: dashed;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ---------- 3. Cards (wrapping flex row) ---------- */
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.card {
+    position: relative;      /* anchor for the absolutely positioned badge */
+    flex: 1 1 260px;
+    padding: 1.25rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 6px var(--shadow);
+}
+
+.card ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+}
+
+/* 4. Badge positioned inside its card */
+.badge {
+    position: absolute;
+    top: -0.75rem;
+    right: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    background-color: var(--gold);
+    border-radius: 999px;
+}
+
+/* ---------- Events table ---------- */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    color: var(--muted);
+    text-align: left;
+}
+
+th,
+td {
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+thead th {
+    color: #ffffff;
+    background-color: var(--accent);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--accent-light);
+}
+
+td[colspan] {
+    font-style: italic;
+    color: var(--muted);
+}
+
+/* ---------- 5. Form styling ---------- */
+
+fieldset {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+legend {
+    padding: 0 0.4rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    max-width: 32rem;
+}
+
+.form-group > label {
+    font-weight: 600;
+}
+
+/* One shared rule set for every text field, select, and textarea.
+   Wrapped in :where() so its specificity is 0 - otherwise the two :not()
+   attribute selectors (0,2,1) beat input:hover, input:focus and
+   input:user-invalid (0,1,1) and crossed out their border colors. */
+:where(input:not([type="radio"]):not([type="checkbox"]), select, textarea) {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background-color: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--speed) ease, box-shadow var(--speed) ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--accent);
+}
+
+/* Clearly visible focus: outline replaced with a thick ring, not removed */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+    border-color: var(--accent);
+}
+
+.hint {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+/* Error helper text stays hidden until the field is invalid */
+.error-msg {
+    display: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--error);
+}
+
+.error-msg::before {
+    content: "\26A0  ";  /* warning sign icon, so feedback is never color alone */
+}
+
+/* :invalid - only after the user has typed (placeholder no longer shown).
+   Feedback = thicker dashed border + warning icon + helper text. */
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown) {
+    border: 3px dashed var(--error);
+}
+
+input:invalid:not(:placeholder-shown) ~ .error-msg {
+    display: block;
+}
+
+/* :user-invalid also covers empty required fields after the user leaves
+   them or presses Register (kept in its own rule so older browsers that
+   do not know it still apply the rule above). */
+input:user-invalid,
+select:user-invalid {
+    border: 3px dashed var(--error);
+}
+
+input:user-invalid ~ .error-msg {
+    display: block;
+}
+
+/* Radio buttons and checkboxes */
+.choice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    transition: background-color var(--speed) ease, border-color var(--speed) ease;
+}
+
+.choice:hover {
+    background-color: var(--accent-light);
+}
+
+.choice input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    accent-color: var(--accent);
+}
+
+/* :checked - selected option gets bold text and a check mark, not just color */
+.choice input:checked + label {
+    font-weight: 700;
+    color: var(--accent-dark);
+}
+
+.choice input:checked + label::after {
+    content: " \2713";
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* ---------- 6. Motion & responsiveness ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .btn:hover,
+    button:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+        position: static;    /* a tall stacked header should not cover the page */
+    }
+
+    .brand h1 {
+        font-size: 1.25rem;
+    }
+
+    .nav-list {
+        flex-wrap: wrap;
+    }
+
+    main,
+    aside {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    aside {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1rem;
+    }
+
+    main > section,
+    main > article {
+        padding: 1rem;
+    }
+
+    main > .hero {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .hero-title {
+        font-size: 1.6rem;
+    }
+
+    .card-list {
+        flex-direction: column;
+    }
+
+    .card {
+        flex-basis: auto;
+    }
+
+    fieldset {
+        padding: 0.75rem;
+    }
+
+    .form-group {
+        max-width: none;
+    }
+
+    /* Bigger tap targets and full-width buttons on phones */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+        padding: 0.85rem;
+    }
+}
