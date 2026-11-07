@@ -1,5 +1,5 @@
-/* ==========================================================
-   Maverick Math Club - Homework 3 stylesheet
+/* 
+    Maverick Math Club - Homework 3 stylesheet
    Author: Braden Thooft
    Sources consulted:
    - MDN, CSS reference: https://developer.mozilla.org/en-US/docs/Web/CSS
@@ -7,10 +7,9 @@
      https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox
    - MDN, :user-invalid: https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid
    - WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/
-   ========================================================== */
+*/
 
-/* ---------- 1. Setup ---------- */
-
+/* 1. Setup */
 *,
 *::before,
 *::after {
@@ -19,9 +18,9 @@
 
 :root {
     /* One accent color (Mavericks purple), reused for links, buttons, borders */
-    --accent: #5b2c8f;                    /* HEX */
+    --accent: #5b2c8f;                    
     --accent-dark: #3f1d66;
-    --accent-light: hsl(270, 45%, 94%);   /* HSL */
+    --accent-light: hsl(270, 45%, 94%);   
     --gold: #f2b632;
     --text: #222222;
     --muted: #555555;
@@ -29,13 +28,12 @@
     --surface: #ffffff;
     --border: #d6cfe0;
     --error: #b00020;
-    --shadow: rgba(40, 20, 70, 0.12);     /* RGBA */
+    --shadow: rgba(40, 20, 70, 0.12);    
     --radius: 8px;
     --speed: 200ms;
 }
 
-/* ---------- 2. Color & typography ---------- */
-
+/* C0lor and typography */
 body {
     margin: 0;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -89,7 +87,7 @@ img {
     height: auto;
 }
 
-/* ---------- 3. Header & nav (Flexbox) ---------- */
+/* 3. Header & nav (Flexbox) */
 
 .site-header {
     display: flex;
@@ -116,8 +114,9 @@ img {
 .brand img {
     width: 56px;
     height: 56px;
-    border-radius: 50%;
-    border: 2px solid var(--accent);
+    object-fit: contain; /* show the whole sign, never stretch or crop it */
+    border-radius: var(--radius);
+    flex-shrink: 0;      /* keep the logo from squishing on narrow screens */
 }
 
 .brand h1 {
@@ -147,7 +146,7 @@ img {
     color: var(--accent-dark);
 }
 
-/* ---------- Page containers & spacing ---------- */
+/* Page containers & spacing */
 
 main,
 aside {
@@ -158,7 +157,7 @@ aside {
 
 main > section,
 main > article {
-    scroll-margin-top: 6rem;   /* #contact / #register links clear the sticky header */
+    scroll-margin-top: 6rem; /* #contact / #register links clear the sticky header */
     margin-bottom: 2rem;
     padding: 1.5rem;
     background-color: var(--surface);
@@ -205,8 +204,6 @@ footer a:hover {
     color: #ffffff;
 }
 
-/* ---------- 4. Hero with background image + fallback ---------- */
-
 main > .hero {
     padding: 4rem 2rem;
     color: #ffffff;
@@ -236,7 +233,7 @@ main > .hero {
     line-height: 1.2;
 }
 
-/* ---------- Buttons (shared accent) ---------- */
+/* Buttons (shared accent) */
 
 .btn,
 button {
@@ -294,8 +291,7 @@ button:disabled:hover {
     transform: none;
 }
 
-/* ---------- 3. Cards (wrapping flex row) ---------- */
-
+/* 3. Cards (wrapping flex row) */
 .card-list {
     display: flex;
     flex-wrap: wrap;
@@ -306,7 +302,7 @@ button:disabled:hover {
 }
 
 .card {
-    position: relative;      /* anchor for the absolutely positioned badge */
+    position: relative; /* anchor for the absolutely positioned badge */
     flex: 1 1 260px;
     padding: 1.25rem;
     background-color: var(--surface);
@@ -335,7 +331,7 @@ button:disabled:hover {
     border-radius: 999px;
 }
 
-/* ---------- Events table ---------- */
+/* Events table */
 
 .table-wrap {
     overflow-x: auto;
@@ -374,7 +370,7 @@ td[colspan] {
     color: var(--muted);
 }
 
-/* ---------- 5. Form styling ---------- */
+/* 5. Form styling */
 
 fieldset {
     margin: 0 0 1.5rem;
@@ -401,10 +397,7 @@ legend {
     font-weight: 600;
 }
 
-/* One shared rule set for every text field, select, and textarea.
-   Wrapped in :where() so its specificity is 0 - otherwise the two :not()
-   attribute selectors (0,2,1) beat input:hover, input:focus and
-   input:user-invalid (0,1,1) and crossed out their border colors. */
+/* One shared rule set for every text field, select, and textarea */
 :where(input:not([type="radio"]):not([type="checkbox"]), select, textarea) {
     width: 100%;
     padding: 0.6rem 0.75rem;
@@ -445,7 +438,7 @@ textarea:focus {
 }
 
 .error-msg::before {
-    content: "\26A0  ";  /* warning sign icon, so feedback is never color alone */
+    content: "\26A0  "; /* warning sign icon, so feedback is never color alone */
 }
 
 /* :invalid - only after the user has typed (placeholder no longer shown).
@@ -510,7 +503,7 @@ input:user-invalid ~ .error-msg {
     margin-top: 1rem;
 }
 
-/* ---------- 6. Motion & responsiveness ---------- */
+/* 6. Motion & responsiveness */
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -531,7 +524,7 @@ input:user-invalid ~ .error-msg {
         flex-direction: column;
         align-items: flex-start;
         padding: 0.75rem 1rem;
-        position: static;    /* a tall stacked header should not cover the page */
+        position: static; /* a tall stacked header should not cover the page */
     }
 
     .brand h1 {
